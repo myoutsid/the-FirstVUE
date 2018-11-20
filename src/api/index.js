@@ -12,3 +12,13 @@ export const reqFoodCategorys = () => ajax('/index_category')
 
 // [3、根据经纬度获取商铺列表](#3根据经纬度获取商铺列表)<br/>
 export const reqShops = ({longitude, latitude}) => ajax('/shops', {latitude, longitude})
+// 发送手机验证码
+export const reqSendCode = (phone) => ajax(BASE + '/sendcode', {phone})
+// 手机号验证码登陆
+export const reqSmsLogin = (phone,code) => ajax(BASE + '/login_sms', {phone,code},'post')
+
+// 用户密码登陆
+export const reqPwdLogin = (name,pwd,captcha) => ajax(BASE + '/login_pwd', {name,pwd,captcha},'post')
+
+//获取当前用户信息
+export const reqUserInfo = () => ajax(BASE + '/userinfo')

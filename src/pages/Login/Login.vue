@@ -53,7 +53,35 @@
 </template>
 
 <script>
+  import {reqSendCode, reqPwdLogin, reqSmsLogin} from '../../api'
+  import {Toast, MessageBox } from 'mint-ui'
   export default {
+    data(){
+
+      return{
+        loginWay: false, // true: 短信登陆, false: 密码登陆
+        phone: '', // 手机号
+        code: '', // 短信验证码
+        name: '', // 用户名
+        pwd: '', // 密码
+        captcha: '', // 图形验证码
+        computeTime: 0, // 计时剩余时间
+        isShowPwd: false, // 是否显示密码
+      }
+    },
+
+    computed:{
+      isRightPhone () {
+        return /^1\d{10}$/.test(this.phone)
+      }
+    },
+
+    methods:{
+
+
+
+    }
+
 
   }
 </script>

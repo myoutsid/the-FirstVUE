@@ -5,12 +5,14 @@
 import {
   reqAddress,
   reqShops,
-  reqFoodCategorys
+  reqFoodCategorys,
+  reqUserInfo
 } from '../api'
 import {
   RECEIVE_SHOPS,
   RECEIVE_CATEGORYS,
-  RECEIVE_ADDRESS
+  RECEIVE_ADDRESS,
+  RECEIVE_USER
 } from './mutation-types'
 
 export default {
@@ -34,7 +36,7 @@ export default {
     }
 
   },
-
+  //获取商家列表的异步请请求
   async getShops({commit,state}){
 
     const {longitude, latitude} = state
@@ -46,7 +48,20 @@ export default {
     }
 
 
+  },
+
+
+  saveUser ({commit},user){
+    commit(RECEIVE_USER,{user})
+  },
+  async getUserInfo({commit}){
+    const result = await reqUserInfo()
+
+    if(result.code ===0){
+      commit(RECEIVE_USER,{user})
+    }
   }
+
 
 
 
