@@ -1,28 +1,23 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
+    <router-view/>
+    <FootGuide v-show="$route.meta.showFoot"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+  import FootGuide from './components/FootGuide/FootGuide.vue'
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  export default {
+
+    mounted(){
+      this.$store.dispatch('getAddress')
+    },
+    components: {
+      FootGuide
+    }
   }
-}
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="stylus" rel="stylesheet/stylus">
 </style>
