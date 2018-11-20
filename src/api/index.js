@@ -22,3 +22,11 @@ export const reqPwdLogin = (name,pwd,captcha) => ajax(BASE + '/login_pwd', {name
 
 //获取当前用户信息
 export const reqUserInfo = () => ajax(BASE + '/userinfo')
+
+//退出登陆
+export const reqLogout = () => ajax(BASE + '/logout')
+
+export const reqShopInfo = () => ajax('/info')
+export const reqShopGoods = () => ajax('/goods')
+export const reqShopRatings = () => ajax('/ratings')
+

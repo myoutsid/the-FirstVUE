@@ -50,6 +50,29 @@ export default new VueRouter({
       component: Login
     },
     {
+      path: '/shop',
+      component: Shop,
+      children: [
+        {
+          path: '/shop/goods',
+          component: ShopGoods
+        },
+        {
+          path: '/shop/ratings',
+          component: ShopRatings
+        },
+        {
+          path: '/shop/info',
+          component: ShopInfo
+        },
+        {
+          path: '',
+          redirect: '/shop/goods'
+        }
+      ]
+    },
+
+    {
       path: '/',
       redirect: '/msite'
     }

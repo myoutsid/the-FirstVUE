@@ -77,10 +77,79 @@
     },
 
     methods:{
+      async reqSendCode(){
+        this.computeTime = 30
+        const interalId = setInterval( () =>{
+          this.computeTime--
+
+          if(computeTime <= 0){
+            this.computeTime = 0
+//            清除定时器
+            clearInterval(interalId)
+          }
+
+        },1000)
+//    发送ajax请求，发送短信验证码
+        const result = await reqSendCode(this.phone)
+          if(result.code === 0){
+          Toast('短息以发送')
+          }else {
+            this.computeTime = 0
+            MessageBox.alert(result.msg,'提示')
+          }
+
+      },
+//    更新图片验证码
+      updateCaptcha (){
+//    给img制定不同的src值只改变参数，浏览器会自动获取图片得
+        this,$refs.captcha.src = 'http://localhost:5000/captcha?time='+Date.now()
+      },
 
 
+      async login (){
+        const {phone, code, name, pwd, captcha, loginWay} = this
+        let result
+        if(loginWay){
+          if(!this.isRightPhone){
+            return MessageBox.alert('请输入正确的手机号')
+          }else if (!/^\d{6}$/.test(code)){
+            return MessageBox.alert('验证码必须是六位数字')
+          }
+//        发登陆的请求
+          rsult = await reqSmsLogin(phone,code)
 
-    }
+        this.computeTime =0
+        }else {
+
+          if(!name){
+            return MessageBox.alert('必须指定用户名')
+          }else if(!pwd){
+            return MessageBox.alert('必须指定密码')
+          }else if(!captcha){
+            return MessageBox.alert('必须指定验证码')
+          }
+//          发登陆的请求
+          result = await reqPwdLogin({name, pwd, captcha})
+//        如果失败，更细图片验证码
+          if(result.code === 0){
+            this.updateCaptcha()
+          }
+        }
+
+//        根据结果做不同的响应
+        if(result.code === 0){
+//        将用户的信息数据保存到state
+          this,$store.dispatch('saveUser',result.data)
+//          跳转到个人中心
+          this.$store.replace('/profile')
+        }else { //失败
+          MessageBox.alert('登陆失败')
+
+        }
+
+      }
+
+    },
 
 
   }
