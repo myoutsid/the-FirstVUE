@@ -6,13 +6,24 @@ import {
   reqAddress,
   reqShops,
   reqFoodCategorys,
-  reqUserInfo
+  reqUserInfo,
+  reqLogout,
+  reqShopGoods,
+  reqShopRatings,
+  reqShopInfo
 } from '../api'
 import {
   RECEIVE_SHOPS,
   RECEIVE_CATEGORYS,
   RECEIVE_ADDRESS,
-  RECEIVE_USER
+  RECEIVE_USER,
+  RESET_USER,
+  RECEIVE_INFO,
+  RECEIVE_RATINGS,
+  RECEIVE_GOODS,
+  ADD_FOOD_COUNT,
+  REDUCE_FOOD_COUNT
+
 } from './mutation-types'
 
 export default {
@@ -99,5 +110,13 @@ export default {
       }
     },
 
-
+//  更新指定food数量
+  updateFoodCount({commit},{food,isAdd}){
+    //判断状态返回不同状态
+    if(isAdd){
+      commit('ADD_FOOD_COUNT',{food})
+    }else {
+      commit('REDUCE_FOOD_COUNT',food)
+    }
+  }
 }

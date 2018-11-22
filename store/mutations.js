@@ -22,5 +22,50 @@ export default {
   },
   [RECEIVE_USER](state,{user}){
     state.user = user
+  },
+  [RESET_USER](state){
+    state.user = {}
+  },
+
+  [RECEIVE_INFO](state,{info}){
+    state.info = info
+
+  },
+
+  [RECEIVE_RATINGS](state,{ratings}){
+
+    state.ratings = ratings
+  },
+
+  [RECEIVE_GOODS](state,{goods}){
+    state.goods = goods
+  },
+
+  [ADD_FOOD_COUNT](state,{food}){
+
+    if(food.count){
+      food.count++
+    }else {// 第一次
+      //新添加count属性，并制定值为1
+      //food.count  =1 // 没有数据绑定 ==》 不会更新界面
+      Vue.set(food,'count',1)
+      // 添加到购物车中
+      state.cartFoods.push(food)
+    }
+  },
+
+  [REDUCE_FOOD_COUNT](state,{food}){
+
+    if(food.count)
+    {
+      food.count--
+      // 一旦减为0得时候 从购物车中删除food
+      if(food.count ===0){
+        state.cartFoods.splice((state.cartFoods.indexOf(food),1))
+      }
+    }
   }
+
+
+
 }
